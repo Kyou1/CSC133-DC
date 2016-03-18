@@ -10,6 +10,7 @@ import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.layouts.GridLayout;
 
+@SuppressWarnings("unused")
 public class Game extends Form {
 	private GameWorld gameWorld;
 	private MapView mapView;

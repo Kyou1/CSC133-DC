@@ -10,13 +10,11 @@ public class GameObjectCollection implements ICollection {
 		collection = new Vector<Object>();
 	}
 
-	@Override
-	public void add(Object o) {
+	public void add(Object newObject) {
+		collection.addElement(newObject);
 		// TODO Auto-generated method stub
-		
 	}
 
-	@Override
 	public IIterator getIterator() {
 		// TODO Auto-generated method stub
 		return new GameObjectIterator();
@@ -62,7 +60,6 @@ public class GameObjectCollection implements ICollection {
 			return collection.get(i);
 		}
 		
-	}
-	
+	} // end GameObjectIterator
 	
 } // end GameObjectCollection

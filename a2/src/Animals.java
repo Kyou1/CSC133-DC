@@ -1,10 +1,12 @@
 package com.mycompany.a2;
 
+import com.codename1.ui.Display;
+
 public class Animals extends GameObject implements IMoving {
 	private int speed;
 	private int direction;
-	private int gameSizeWidth = 1000;
-	private int gameSizeHeight = 610;
+	private int gameSizeWidth = Display.getInstance().getDisplayWidth();
+	private int gameSizeHeight = Display.getInstance().getDisplayHeight();
 
 	public Animals() {
 

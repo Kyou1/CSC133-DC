@@ -2,38 +2,41 @@ package com.mycompany.a2;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Vector;
 
-import com.codename1.charts.util.ColorUtil;
+import com.codename1.ui.Display;
 
 public class GameWorld implements IObservable {
-	private ArrayList<GameObject> gameObjectsList;
+	
+	private static GameObjectCollection objects;
+	private ArrayList<Object> observerArray = new ArrayList<>();
+	
 	private int dogNum = 3, catNum = 2;
 	private int dogQty, catQty;
 	private int totalScore = 0;
+	private int clockTick;
+	private int caughtCats, catsRemaining, caughtDogs, dogsRemaining;
 
 	private Net net;
 	private Dog dog;
 	private Cat cat;
-	static int gameSizeWidth = 1000;
-	static int gameSizeHeight = 610;
+	//private boolean sound;
+	static int gameSizeWidth = Display.getInstance().getDisplayWidth();
+	static int gameSizeHeight = Display.getInstance().getDisplayHeight();
 	Random rand = new Random();
 
 	public GameWorld() {
+		objects = new GameObjectCollection();
 		dog = new Dog();
 		cat = new Cat();
 		net = new Net();
 	}
 
 	public void init() {
-		gameObjectsList = new ArrayList<>();
-
+		
 		generateDog();
 		generateCat();
 		generateNet();
-
-		for (GameObject list : gameObjectsList) {
-			System.out.println(list);
-		}
 	}
 
 	public void generateDog() {
@@ -45,7 +48,7 @@ public class GameWorld implements IObservable {
 			dog.setDirection(rand.nextInt(360));
 			dog.setSpeed(5);
 			dog.setColor(dog.getColor());
-			gameObjectsList.add(dog);
+			objects.add(dog);
 		}
 	}
 
@@ -58,7 +61,7 @@ public class GameWorld implements IObservable {
 			cat.setDirection(rand.nextInt(360));
 			cat.setSpeed(5);
 			cat.setColor(cat.getColor());
-			gameObjectsList.add(cat);
+			objects.add(cat);
 		}
 	}
 
@@ -66,7 +69,7 @@ public class GameWorld implements IObservable {
 		net.setLocation(rand.nextInt(gameSizeWidth), rand.nextInt(gameSizeHeight));
 		net.setSize(100);
 		net.setColor(net.getColor());
-		gameObjectsList.add(net);
+		objects.add(net);
 	}
 
 	public void netExpand() {
@@ -84,7 +87,54 @@ public class GameWorld implements IObservable {
 	}
 
 	public void scoop() {
-		for (int i = gameObjectsList.size() - 1; i >= 0; i--) {
+		float netTop = net.getLocationY() - (net.getSize()/2);
+		float netBottom = net.getLocationY() + (net.getSize()/2);
+		float netLeft = net.getLocationX() - (net.getSize()/2);
+		float netRight = net.getLocationX() + (net.getSize()/2);
+		
+		IIterator iterator = objects.getIterator();
+		Object currentObject;
+		
+		while(iterator.hasNext()) {
+			currentObject = iterator.getNext();
+			if( currentObject instanceof Cat ) {
+				if(((Cat) currentObject).getLocationX() > netLeft
+						&& ((Cat) currentObject).getLocationX() < netRight
+						&& ((Cat) currentObject).getLocationX() > netBottom
+						&& ((Cat) currentObject).getLocationX() < netTop) {
+					
+					System.out.println("Cat caught");
+					
+					caughtCats++;
+					catQty--;
+					
+					iterator.remove();
+				} // end if
+			} // end if Cat
+			else if (currentObject instanceof Dog) {
+				if (((Dog) currentObject).getLocationX() > netLeft
+						&& ((Dog) currentObject).getLocationX() < netRight
+						&& ((Dog) currentObject).getLocationX() > netBottom
+						&& ((Dog) currentObject).getLocationX() < netTop) {
+					
+					System.out.println("Dog caught");
+					
+					caughtDogs++;
+					dogQty--;
+					
+					iterator.remove();
+					
+					if (dogQty == 0 ) {
+						System.out.println("*** Game over! ***");
+						points();
+						System.exit(0);
+					} // end if
+				} // end if dog
+			} // if Dog
+			
+		} // end while
+		notifyObservers();
+/*		for (int i = gameObjectsList.size() - 1; i >= 0; i--) {
 			if ((gameObjectsList.get(i).getLocationX() >= net.getLocationX() - (net.getSize() / 2))
 					&& (gameObjectsList.get(i).getLocationX() <= net.getLocationX() + (net.getSize() / 2))
 					&& (gameObjectsList.get(i).getLocationY() <= net.getLocationY() + (net.getSize() / 2))
@@ -99,9 +149,8 @@ public class GameWorld implements IObservable {
 					dogQty--;
 					gameObjectsList.remove(i);
 				}
-
 			}
-		}
+		}*/
 	}
 
 	public void moveRight() {
@@ -121,16 +170,16 @@ public class GameWorld implements IObservable {
 	}
 
 	public void JumpToDog() {
-		for (int i = gameObjectsList.size() - 1; i >= 0; i--) {
-			if (gameObjectsList.get(i) instanceof Dog) {
+		while(((IIterator) objects).hasNext()) {
+			if (((IIterator) objects).getNext() instanceof Dog) {
 				net.setLocation(dog.getLocationX(), dog.getLocationY());
 			}
 		}
 	}
 
 	public void JumpToCat() {
-		for (int i = gameObjectsList.size() - 1; i >= 0; i--) {
-			if (gameObjectsList.get(i) instanceof Cat) {
+		while(((IIterator) objects).hasNext()) {
+			if (((IIterator) objects).getNext() instanceof Cat) {
 				net.setLocation(cat.getLocationX(), cat.getLocationY());
 			}
 		}
@@ -140,17 +189,26 @@ public class GameWorld implements IObservable {
 		catQty++;
 		cat = new Cat();
 		cat.setSpeed(5);
-		for (int i = 0; i < gameObjectsList.size(); i++) {
-			if (gameObjectsList.get(i) instanceof Cat) {
+		while(((IIterator) objects).hasNext()) {
+			if (((IIterator) objects).getNext() instanceof Cat)  {
 				cat.setLocation(cat.getLocationX() + (5), cat.getLocationY() + (5));
 			}
 		}
 		cat.setDirection(rand.nextInt(360));
-		gameObjectsList.add(cat);
+		objects.add(cat);
 	}
 
 	public void fight() {
-		int temp = rand.nextInt(gameObjectsList.size());
+		Vector<Object> listOfDogs = new Vector<Object>();
+		IIterator iterator = objects.getIterator();
+		
+		while(iterator.hasNext()) {
+			if (iterator.getNext() instanceof Dog) {
+				listOfDogs.add(iterator.getIndex());
+			} // end if
+		} // end while
+		
+/*		int temp = rand.nextInt(gameObjectsList.size());
 		while (!(gameObjectsList.get(temp) instanceof Dog)) {
 			temp = rand.nextInt(gameObjectsList.size());
 		}
@@ -163,54 +221,117 @@ public class GameWorld implements IObservable {
 			gameObjectsList.get(temp).setColor(brighterRed);
 			((Dog) gameObjectsList.get(temp)).setScratch(x + 1);
 
-		}
-	}
+		}*/
+	} // end fight
 
 	public void gameTick() {
-		for (int i = 0; i < gameObjectsList.size(); i++) {
+		
+		clockTick = clockTick + 1;
+		
+		IIterator iterator = objects.getIterator();
+		Object currentObjects;
+		
+		while(iterator.hasNext()) {
+			currentObjects = iterator.getNext();
+			if(currentObjects instanceof Animals) {
+				((Animals) currentObjects).move();
+			}
+		}
+		notifyObservers();
+/*		for (int i = 0; i < gameObjectsList.size(); i++) {
 			if (gameObjectsList.get(i) instanceof Animals) {
 				((Animals) gameObjectsList.get(i)).move();
 			}
-		}
+		}*/
 	}
 
 	public void points() {
-		int y = 0;
+/*		int y = 0;
 		for (int i = 0; i < gameObjectsList.size(); i++) {
 			if (gameObjectsList.get(i) instanceof Dog) {
 				int x = ((Dog) gameObjectsList.get(i)).getScratch();
 				y += 10 - x;
 			}
 
-		}
+		}*/
 		int a = catNum - catQty;
 		int b = dogNum - dogQty;
-		System.out.println("Current score: " + y);
+		System.out.println("Current score: ");
 		System.out.println("Number of Cats: " + catQty);
 		System.out.println("Number of Dogs: " + dogQty);
 		System.out.println("Number of Dogs Captured: " + b);
 		System.out.println("Number of Cats Captured: " + a);
 	}
 
-	public void map() {
-		for (GameObject list : gameObjectsList) {
+	public void printMap() {
+		IIterator iterator = objects.getIterator();
+		while(iterator.hasNext()) {
+			System.out.println(iterator.getNext().toString());
+		} // end while
+/*		for (GameObject list : gameObjectsList) {
 			System.out.println(list);
-		}
+		}*/
+	} // end while
+	
+	public void quit() {
+		System.out.println("Game ended.");
+		System.exit(0);
 	}
 	
 	public int getTotalScore() {
 		return totalScore;
 	}
+	
+	public int getCaughtCats() {
+		return caughtCats;
+	}
+	
+	public int getCaughtDogs() {
+		return caughtDogs;
+	}
+	
+	public int getRemainingCats() {
+		return catsRemaining;
+	}
+	
+	public int getRemainingDogs() {
+		return dogsRemaining;
+	}
 
 	@Override
 	public void addObserver(IObserver obs) {
-		// TODO Auto-generated method stub
-		
+		observerArray.add(obs);	
 	}
 
 	@Override
 	public void notifyObservers() {
-		// TODO Auto-generated method stub
-		
+		if(!observerArray.isEmpty()) {
+			for(int i = 0; i < observerArray.size(); i++) {
+				((IObserver) observerArray.get(i)).update(this);
+			} // end for
+		} // end if
+	} // end notifyObservers
+	
+/*	public void soundOn() {
+		sound = true;
+		notifyObservers();
 	}
+	
+	public void soundOff() {
+		sound = false;
+		notifyObservers();
+	}
+	
+	public void soundToggle(){
+		if(sound){
+			sound = false;
+		}else{
+			sound = true;
+		}
+		notifyObservers();
+	}
+	
+	public boolean isSoundOn() {
+		return sound;
+	}*/
 }
