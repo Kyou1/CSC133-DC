@@ -24,7 +24,11 @@ public class CommandJumpToDog extends Command{
 	}
 	
 	public void actionPerformed(ActionEvent e) {
-		System.out.println("Jumped to dog.");
-		game.JumpToDog();
+		try {
+			System.out.println("Jumped to dog.");
+			game.JumpToDog();
+		} catch (NullPointerException e1) {
+			
+		}
 	}
 }

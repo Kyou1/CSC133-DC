@@ -24,7 +24,11 @@ public class CommandExpand extends Command{
 	}
 	
 	public void actionPerformed(ActionEvent e) {
-		System.out.println("Net expanded.");
-		game.netExpand();
+		try  {
+			System.out.println("Net expanded.");
+			game.netExpand();
+		} catch (NullPointerException e1) {
+			
+		}
 	}
 }

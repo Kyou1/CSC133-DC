@@ -7,7 +7,7 @@ public class GameObjectCollection implements ICollection {
 	private Vector<Object> collection;
 	
 	public GameObjectCollection() {
-		collection = new Vector<Object>();
+		collection = new Vector<>();
 	}
 
 	public void add(Object newObject) {

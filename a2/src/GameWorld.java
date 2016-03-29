@@ -1,19 +1,19 @@
 package com.mycompany.a2;
 
-import java.util.ArrayList;
 import java.util.Random;
 import java.util.Vector;
 
+import com.codename1.charts.util.ColorUtil;
 import com.codename1.ui.Display;
 
 public class GameWorld implements IObservable {
 	
 	private static GameObjectCollection objects;
-	private ArrayList<Object> observerArray = new ArrayList<>();
+	private Vector<Object> observerArray = new Vector<>();
 	
-	private int dogNum = 3, catNum = 2;
+	private int dogNum = new Integer(3), catNum = new Integer(2);
 	private int dogQty, catQty;
-	private int totalScore = 0;
+	private int totalScore = new Integer(0);
 	private int clockTick;
 	private int caughtCats, catsRemaining, caughtDogs, dogsRemaining;
 
@@ -47,7 +47,7 @@ public class GameWorld implements IObservable {
 			dog.setSize(rand.nextInt(50 - 20) + 20);
 			dog.setDirection(rand.nextInt(360));
 			dog.setSpeed(5);
-			dog.setColor(dog.getColor());
+			dog.setColor(rand.nextInt(255));
 			objects.add(dog);
 		}
 	}
@@ -60,7 +60,7 @@ public class GameWorld implements IObservable {
 			cat.setSize(rand.nextInt(50 - 20) + 20);
 			cat.setDirection(rand.nextInt(360));
 			cat.setSpeed(5);
-			cat.setColor(cat.getColor());
+			cat.setColor(rand.nextInt(255));
 			objects.add(cat);
 		}
 	}
@@ -68,7 +68,7 @@ public class GameWorld implements IObservable {
 	public void generateNet() {
 		net.setLocation(rand.nextInt(gameSizeWidth), rand.nextInt(gameSizeHeight));
 		net.setSize(100);
-		net.setColor(net.getColor());
+		net.setColor(rand.nextInt(255));
 		objects.add(net);
 	}
 
@@ -189,11 +189,12 @@ public class GameWorld implements IObservable {
 		catQty++;
 		cat = new Cat();
 		cat.setSpeed(5);
-		while(((IIterator) objects).hasNext()) {
-			if (((IIterator) objects).getNext() instanceof Cat)  {
-				cat.setLocation(cat.getLocationX() + (5), cat.getLocationY() + (5));
-			}
-		}
+		cat.setColor(ColorUtil.BLACK);
+		//while(((IIterator) objects).hasNext()) {
+		//	if (((IIterator) objects).getNext() instanceof Cat)  {
+				cat.setLocation(cat.getLocationX() + 5, cat.getLocationY() + 5);
+		//	}
+		//}
 		cat.setDirection(rand.nextInt(360));
 		objects.add(cat);
 	}

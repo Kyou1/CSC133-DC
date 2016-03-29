@@ -24,7 +24,11 @@ public class CommandRight extends Command {
 	}
 	
 	public void actionPerformed(ActionEvent e) {
+		try {
 		System.out.println("Moved right.");
 		game.moveRight();
+		} catch(NullPointerException e1) {
+			
+		}
 	}
 }

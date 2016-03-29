@@ -18,7 +18,11 @@ public class CommandQuit extends Command{
 	}
 	
 	public void actionPerformed(ActionEvent e) {
-		System.out.println("Game quited.");
-		System.exit(0);
+		try {
+			System.out.println("Game quited.");
+			System.exit(0);
+		} catch (NullPointerException e1) {
+			
+		}
 	}
 }

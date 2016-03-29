@@ -23,7 +23,11 @@ public class CommandContract extends Command {
 	}
 	
 	public void actionPerformed(ActionEvent e) {
-		System.out.println("Net has contracted.");
-		game.netContract();
+		try {
+			System.out.println("Net has contracted.");
+			game.netContract();
+		} catch (NullPointerException e1) {
+			
+		}
 	}
 }

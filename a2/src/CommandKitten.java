@@ -8,23 +8,29 @@ public class CommandKitten extends Command{
 	private static GameWorld game;
 	
 	public CommandKitten() {
-		super("Made Kittens!");
+		super("Kitten");
 		// TODO Auto-generated constructor stub
 	}
 
 	public static CommandKitten getInstance() {
-		if(commandKitten == null)
+		if(commandKitten == null) {
 			commandKitten = new CommandKitten();
+		}
 		return commandKitten;
 	}
 
 	public static void setTarget(GameWorld gameWorld) {
-		if( game == null )
+		if( game == null ) {
 			game = gameWorld;
+		}
 	}
 	
 	public void actionPerformed(ActionEvent e) {
-		System.out.println("Cat added.");
-		game.produceKitten();
+		try {
+			System.out.println("Cat added.");
+			game.produceKitten();
+		} catch (NullPointerException e1) {
+			
+		}
 	}
 }

@@ -38,10 +38,10 @@ public class ScoreView extends Container implements IObserver {
 	public void update(IObservable o) {
 		// TODO Auto-generated method stub
 		totalScore.setText("   Total Score: " + ((GameWorld) o).getTotalScore());
-		capturedDogs.setText("   Total Score: " + ((GameWorld) o).getTotalScore());
-		capturedCats.setText("   Total Score: " + ((GameWorld) o).getTotalScore());
-		remainingDogs.setText("   Total Score: " + ((GameWorld) o).getTotalScore());
-		remainingCats.setText("   Total Score: " + ((GameWorld) o).getTotalScore());
+		capturedDogs.setText("   Dogs Captured: " + ((GameWorld) o).getCaughtDogs());
+		capturedCats.setText("   Cats Captured: " + ((GameWorld) o).getCaughtCats());
+		remainingDogs.setText("   Remaining Dogs: " + ((GameWorld) o).getRemainingDogs());
+		remainingCats.setText("   Remaining Cats: " + ((GameWorld) o).getRemainingCats());
 		
 		this.setVisible(true);
 	}

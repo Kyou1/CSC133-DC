@@ -24,7 +24,11 @@ public class CommandLeft extends Command{
 	}
 	
 	public void actionPerformed(ActionEvent e) {
-		System.out.println("Moved left.");
-		game.moveLeft();
+		try {
+			System.out.println("Moved left.");
+			game.moveLeft();
+		} catch (NullPointerException e1) {
+			
+		}
 	}
 }

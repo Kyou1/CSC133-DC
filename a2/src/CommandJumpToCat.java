@@ -4,18 +4,18 @@ import com.codename1.ui.Command;
 import com.codename1.ui.events.ActionEvent;
 
 public class CommandJumpToCat extends Command {
-	private static CommandKitten commandKitten;
+	private static CommandJumpToCat commandJumpCat;
 	private static GameWorld game;
 	
 	public CommandJumpToCat() {
-		super("Made kittens.");
+		super("Jump to Cat");
 		// TODO Auto-generated constructor stub
 	}
 	
-	public static CommandKitten getInstance() {
-		if(commandKitten == null)
-			commandKitten = new CommandKitten();
-		return commandKitten;
+	public static CommandJumpToCat getInstance() {
+		if(commandJumpCat == null)
+			commandJumpCat = new CommandJumpToCat();
+		return commandJumpCat;
 	}
 
 	public static void setTarget(GameWorld gameWorld) {
@@ -24,7 +24,11 @@ public class CommandJumpToCat extends Command {
 	}
 	
 	public void actionPerformed(ActionEvent e) {
-		System.out.println("Cat added.");
-		game.produceKitten();
+		try {
+			System.out.println("Jump to Cat.");
+			game.JumpToCat();
+		} catch (NullPointerException e1) {
+			
+		}
 	}
 }

@@ -2,6 +2,7 @@ package com.mycompany.a2;
 
 import com.codename1.ui.Command;
 import com.codename1.ui.events.ActionEvent;
+import com.codename1.ui.layouts.BoxLayout;
 
 public class CommandDown extends Command{
 	
@@ -24,7 +25,11 @@ public class CommandDown extends Command{
 	}
 	
 	public void actionPerformed(ActionEvent e) {
-		System.out.println("Moved down.");
-		game.moveDown();
+		try {
+			System.out.println("Moved down.");
+			game.moveDown();
+		} catch (NullPointerException e1) {
+			
+		}
 	}
 }

@@ -24,7 +24,11 @@ public class CommandFight extends Command {
 	}
 	
 	public void actionPerformed(ActionEvent e) {
-		System.out.println("Fight.");
-		game.fight();
+		try {
+			System.out.println("Fight.");
+			game.fight();
+		} catch (NullPointerException e1) {
+			
+		}
 	}
 }
