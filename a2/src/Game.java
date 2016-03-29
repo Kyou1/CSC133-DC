@@ -62,22 +62,22 @@ public class Game extends Form {
 			Button tickMenuButton = new Button("Tick");
 
 			kittenMenuButton.setCommand(CommandKitten.getInstance());
-			kittenMenuButton.getUnselectedStyle().setPadding(20,20,20,20);
-			kittenMenuButton.getUnselectedStyle().setBgTransparency(255);
-			kittenMenuButton.getUnselectedStyle().setBgColor(ColorUtil.BLUE);
-			kittenMenuButton.getUnselectedStyle().setFgColor(ColorUtil.WHITE);
+			kittenMenuButton.getAllStyles().setPadding(20,20,20,20);
+			kittenMenuButton.getAllStyles().setBgTransparency(255);
+			kittenMenuButton.getAllStyles().setBgColor(ColorUtil.BLUE);
+			kittenMenuButton.getAllStyles().setFgColor(ColorUtil.WHITE);
 			
 			fightMenuButton.setCommand(CommandFight.getInstance());
-			fightMenuButton.getUnselectedStyle().setPadding(20,20,20,20);
-			fightMenuButton.getUnselectedStyle().setBgTransparency(255);
-			fightMenuButton.getUnselectedStyle().setBgColor(ColorUtil.BLUE);
-			fightMenuButton.getUnselectedStyle().setFgColor(ColorUtil.WHITE);
+			fightMenuButton.getAllStyles().setPadding(20,20,20,20);
+			fightMenuButton.getAllStyles().setBgTransparency(255);
+			fightMenuButton.getAllStyles().setBgColor(ColorUtil.BLUE);
+			fightMenuButton.getAllStyles().setFgColor(ColorUtil.WHITE);
 			
 			tickMenuButton.setCommand(CommandTick.getInstance());
-			tickMenuButton.getUnselectedStyle().setPadding(20,20,20,20);
-			tickMenuButton.getUnselectedStyle().setBgTransparency(255);
-			tickMenuButton.getUnselectedStyle().setBgColor(ColorUtil.BLUE);
-			tickMenuButton.getUnselectedStyle().setFgColor(ColorUtil.WHITE);
+			tickMenuButton.getAllStyles().setPadding(20,20,20,20);
+			tickMenuButton.getAllStyles().setBgTransparency(255);
+			tickMenuButton.getAllStyles().setBgColor(ColorUtil.BLUE);
+			tickMenuButton.getAllStyles().setFgColor(ColorUtil.WHITE);
 
 			bottomContainer.addComponent(kittenMenuButton);
 			bottomContainer.addComponent(fightMenuButton);
@@ -94,28 +94,28 @@ public class Game extends Form {
 			Button jumpToDogMenuButton = new Button("JumpToDog");
 			
 			expandMenuButton.setCommand(CommandExpand.getInstance());		
-			expandMenuButton.getUnselectedStyle().setPadding(20,20,20,20);
-			expandMenuButton.getUnselectedStyle().setBgTransparency(255);
-			expandMenuButton.getUnselectedStyle().setBgColor(ColorUtil.BLUE);
-			expandMenuButton.getUnselectedStyle().setFgColor(ColorUtil.WHITE);
+			expandMenuButton.getAllStyles().setPadding(20,20,20,20);
+			expandMenuButton.getAllStyles().setBgTransparency(255);
+			expandMenuButton.getAllStyles().setBgColor(ColorUtil.BLUE);
+			expandMenuButton.getAllStyles().setFgColor(ColorUtil.WHITE);
 
 			upMenuButton.setCommand(CommandUp.getInstance());		
-			upMenuButton.getUnselectedStyle().setPadding(20,20,20,20);
-			upMenuButton.getUnselectedStyle().setBgTransparency(255);
-			upMenuButton.getUnselectedStyle().setBgColor(ColorUtil.BLUE);
-			upMenuButton.getUnselectedStyle().setFgColor(ColorUtil.WHITE);
+			upMenuButton.getAllStyles().setPadding(20,20,20,20);
+			upMenuButton.getAllStyles().setBgTransparency(255);
+			upMenuButton.getAllStyles().setBgColor(ColorUtil.BLUE);
+			upMenuButton.getAllStyles().setFgColor(ColorUtil.WHITE);
 			
 			leftMenuButton.setCommand(CommandLeft.getInstance());		
-			leftMenuButton.getUnselectedStyle().setPadding(20,20,20,20);
-			leftMenuButton.getUnselectedStyle().setBgTransparency(255);
-			leftMenuButton.getUnselectedStyle().setBgColor(ColorUtil.BLUE);
-			leftMenuButton.getUnselectedStyle().setFgColor(ColorUtil.WHITE);
+			leftMenuButton.getAllStyles().setPadding(20,20,20,20);
+			leftMenuButton.getAllStyles().setBgTransparency(255);
+			leftMenuButton.getAllStyles().setBgColor(ColorUtil.BLUE);
+			leftMenuButton.getAllStyles().setFgColor(ColorUtil.WHITE);
 			
 			jumpToDogMenuButton.setCommand(CommandJumpToDog.getInstance());		
-			jumpToDogMenuButton.getUnselectedStyle().setPadding(20,20,20,20);
-			jumpToDogMenuButton.getUnselectedStyle().setBgTransparency(255);
-			jumpToDogMenuButton.getUnselectedStyle().setBgColor(ColorUtil.BLUE);
-			jumpToDogMenuButton.getUnselectedStyle().setFgColor(ColorUtil.WHITE);
+			jumpToDogMenuButton.getAllStyles().setPadding(20,20,20,20);
+			jumpToDogMenuButton.getAllStyles().setBgTransparency(255);
+			jumpToDogMenuButton.getAllStyles().setBgColor(ColorUtil.BLUE);
+			jumpToDogMenuButton.getAllStyles().setFgColor(ColorUtil.WHITE);
 			
 			leftContainer.addComponent(expandMenuButton);
 			leftContainer.add(upMenuButton);
@@ -135,34 +135,34 @@ public class Game extends Form {
 			Button scoopMenuButton = new Button("Scoop");
 			
 			contractMenuButton.setCommand(CommandContract.getInstance());		
-			contractMenuButton.getUnselectedStyle().setPadding(20,20,20,20);
-			contractMenuButton.getUnselectedStyle().setBgTransparency(255);
-			contractMenuButton.getUnselectedStyle().setBgColor(ColorUtil.BLUE);
-			contractMenuButton.getUnselectedStyle().setFgColor(ColorUtil.WHITE);
+			contractMenuButton.getAllStyles().setPadding(20,20,20,20);
+			contractMenuButton.getAllStyles().setBgTransparency(255);
+			contractMenuButton.getAllStyles().setBgColor(ColorUtil.BLUE);
+			contractMenuButton.getAllStyles().setFgColor(ColorUtil.WHITE);
 			
 			downMenuButton.setCommand(CommandDown.getInstance());		
-			downMenuButton.getUnselectedStyle().setPadding(20,20,20,20);
-			downMenuButton.getUnselectedStyle().setBgTransparency(255);
-			downMenuButton.getUnselectedStyle().setBgColor(ColorUtil.BLUE);
-			downMenuButton.getUnselectedStyle().setFgColor(ColorUtil.WHITE);
+			downMenuButton.getAllStyles().setPadding(20,20,20,20);
+			downMenuButton.getAllStyles().setBgTransparency(255);
+			downMenuButton.getAllStyles().setBgColor(ColorUtil.BLUE);
+			downMenuButton.getAllStyles().setFgColor(ColorUtil.WHITE);
 			
 			rightMenuButton.setCommand(CommandRight.getInstance());		
-			rightMenuButton.getUnselectedStyle().setPadding(20,20,20,20);
-			rightMenuButton.getUnselectedStyle().setBgTransparency(255);
-			rightMenuButton.getUnselectedStyle().setBgColor(ColorUtil.BLUE);
-			rightMenuButton.getUnselectedStyle().setFgColor(ColorUtil.WHITE);
+			rightMenuButton.getAllStyles().setPadding(20,20,20,20);
+			rightMenuButton.getAllStyles().setBgTransparency(255);
+			rightMenuButton.getAllStyles().setBgColor(ColorUtil.BLUE);
+			rightMenuButton.getAllStyles().setFgColor(ColorUtil.WHITE);
 			
 			jumpToCatMenuButton.setCommand(CommandJumpToCat.getInstance());		
-			jumpToCatMenuButton.getUnselectedStyle().setPadding(20,20,20,20);
-			jumpToCatMenuButton.getUnselectedStyle().setBgTransparency(255);
-			jumpToCatMenuButton.getUnselectedStyle().setBgColor(ColorUtil.BLUE);
-			jumpToCatMenuButton.getUnselectedStyle().setFgColor(ColorUtil.WHITE);
+			jumpToCatMenuButton.getAllStyles().setPadding(20,20,20,20);
+			jumpToCatMenuButton.getAllStyles().setBgTransparency(255);
+			jumpToCatMenuButton.getAllStyles().setBgColor(ColorUtil.BLUE);
+			jumpToCatMenuButton.getAllStyles().setFgColor(ColorUtil.WHITE);
 			
 			scoopMenuButton.setCommand(CommandScoop.getInstance());		
 			scoopMenuButton.getUnselectedStyle().setPadding(20,20,20,20);
-			scoopMenuButton.getUnselectedStyle().setBgTransparency(255);
-			scoopMenuButton.getUnselectedStyle().setBgColor(ColorUtil.BLUE);
-			scoopMenuButton.getUnselectedStyle().setFgColor(ColorUtil.WHITE);
+			scoopMenuButton.getAllStyles().setBgTransparency(255);
+			scoopMenuButton.getAllStyles().setBgColor(ColorUtil.BLUE);
+			scoopMenuButton.getAllStyles().setFgColor(ColorUtil.WHITE);
 			
 			rightContainer.addComponent(contractMenuButton);
 			rightContainer.add(downMenuButton);

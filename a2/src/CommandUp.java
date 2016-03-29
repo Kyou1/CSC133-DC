@@ -24,7 +24,11 @@ public class CommandUp extends Command{
 	}
 	
 	public void actionPerformed(ActionEvent e) {
-		System.out.println("Moved up.");
-		game.moveUp();
+		try {
+			System.out.println("Moved up.");
+			game.moveUp();
+		} catch (NullPointerException e1) {
+			
+		}
 	}
 }

@@ -20,6 +20,10 @@ public class CommandSound extends Command{
 	}
 	
 	public void actionPerformed(ActionEvent e) {
-		System.out.println("Sound off.");
+		try {
+			System.out.println("Sound off.");
+		} catch (NullPointerException e1) {
+			
+		}
 	}
 }

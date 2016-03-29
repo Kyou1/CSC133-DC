@@ -24,7 +24,11 @@ public class CommandTick extends Command{
 	}
 	
 	public void actionPerformed(ActionEvent e) {
-		System.out.println("Ticked Up.");
-		game.gameTick();
+		try {
+			System.out.println("Ticked Up.");
+			game.gameTick();
+		} catch (NullPointerException e1) {
+			
+		}
 	}
 }

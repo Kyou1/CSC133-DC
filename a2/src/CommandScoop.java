@@ -24,7 +24,11 @@ public class CommandScoop extends Command{
 	}
 	
 	public void actionPerformed(ActionEvent e) {
-		System.out.println("Scooped.");
-		game.scoop();
+		try {
+			System.out.println("Scooped.");
+			game.scoop();
+		} catch (NullPointerException e1) {
+			
+		}
 	}
 }
