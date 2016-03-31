@@ -6,6 +6,7 @@ import com.codename1.ui.Button;
 import com.codename1.ui.Command;
 import com.codename1.ui.Component;
 import com.codename1.ui.Container;
+import com.codename1.ui.Dialog;
 import com.codename1.ui.Form;
 import com.codename1.ui.Label;
 import com.codename1.ui.TextField;
@@ -26,31 +27,88 @@ public class Game extends Form {
 	private ScoreView scoreView;
 
 	public Game() {
-		gameWorld = new GameWorld();
-		mapView = new MapView();
-		scoreView = new ScoreView();
+		try {
+			gameWorld = new GameWorld();
+			mapView = new MapView();
+			scoreView = new ScoreView();
 		
-		gameWorld.init();
-		//play();
+			gameWorld.init();
+			//play();
 		
-		gameWorld.addObserver(mapView);
-		gameWorld.addObserver(scoreView);
-		gameWorld.notifyObservers();
-		
+			Form dc = new Form("Dog Catcher");
 			this.setLayout(new BorderLayout());
 			this.setTitle("Dog Catcher");
 			
 			Toolbar sideMenuToolbar = new Toolbar();
+			sideMenuToolbar.getAllStyles().setPadding(20, 0, 0, 0);
+			sideMenuToolbar.getAllStyles().setBgColor(ColorUtil.BLUE);
+			sideMenuToolbar.getAllStyles().setFgColor(ColorUtil.WHITE);
 			setToolbar(sideMenuToolbar);
-			Command sideMenuItem1 = new Command("Command 1");
-			sideMenuToolbar.addCommandToSideMenu(sideMenuItem1);
-			Command sideMenuItemHelp = new Command("Help?");
+			
+			Button sideMenuScoop = new Button("Scoop");
+			sideMenuScoop.setCommand(CommandScoop.getInstance());
+			
+			sideMenuToolbar.addComponentToSideMenu(sideMenuScoop);
+			Command sideMenuSound = new Command("Sound") {
+				public void actionPerformed(ActionEvent e) {
+					try {
+						System.out.println("SOUND");
+						//gameWorld.sound();
+					} catch (NullPointerException e1) {
+						
+					}
+				}
+			};
+			
+			sideMenuToolbar.addCommandToSideMenu(sideMenuSound);
+			Command sideMenuAbout = new Command("About") {
+				public void actionPerformed(ActionEvent e) {
+					try {
+						Dialog.show("ABOUT ME", " Author: Clyde Pabro \n Class: CSC 133 \n Spring 2016 \n Version: 1.0.0.1", "OK", null);
+					} catch (NullPointerException e1) {
+						
+					}
+				}
+			};
+			sideMenuToolbar.addCommandToSideMenu(sideMenuAbout);
+			
+			Button sideMenuExit = new Button("Exit");
+			sideMenuExit.setCommand(CommandQuit.getInstance());
+			sideMenuToolbar.addComponentToSideMenu(sideMenuExit);
+			
+			Command sideMenuItemHelp = new Command("Help?") {
+				public void actionPerformed(ActionEvent e) {
+					try {
+						Dialog.show("KEYBOARD COMMANDS", 
+									" e - expand net \n"
+									+ " c - contract net \n"
+									+ " s - scoop net \n"
+									+ " r - move net right \n"
+									+ " l - move net left \n"
+									+ " u - move net up \n"
+									+ " d - move net down \n"
+									+ " o - options \n"
+									+ " a - about \n"
+									+ " k - add kitten \n"
+									+ " f - fight \n"
+									+ " t - tick up \n"
+									+ " q - quit program \n", 
+									"PRESS RETURN TO QUIT", null);
+					} catch (NullPointerException e1) {
+						
+					}
+				}
+			};
 			sideMenuToolbar.addCommandToRightBar(sideMenuItemHelp);
 			
-			Container topContainer = new Container(new BoxLayout(BoxLayout.X_AXIS));
+			Container topContainer = new Container(new GridLayout(1,1));
+			//topContainer.setLayout(new FlowLayout(Component.CENTER));
+			topContainer.getAllStyles().setPadding(0,0,180,0);
+			topContainer.getAllStyles().setBgTransparency(255);
 			topContainer.getAllStyles().setBorder(Border.createLineBorder(2, ColorUtil.GRAY));
-			topContainer.getAllStyles().setBgColor(ColorUtil.GRAY);
-			topContainer.addComponent(scoreView);
+			//topContainer.getAllStyles().setBgColor(ColorUtil.GRAY);
+			topContainer.getAllStyles().setFgColor(ColorUtil.BLUE);
+			topContainer.add(scoreView);
 			this.add(BorderLayout.NORTH, topContainer);
 			
 			Container bottomContainer = new Container(new BoxLayout(BoxLayout.X_AXIS));
@@ -79,9 +137,9 @@ public class Game extends Form {
 			tickMenuButton.getAllStyles().setBgColor(ColorUtil.BLUE);
 			tickMenuButton.getAllStyles().setFgColor(ColorUtil.WHITE);
 
-			bottomContainer.addComponent(kittenMenuButton);
-			bottomContainer.addComponent(fightMenuButton);
-			bottomContainer.addComponent(tickMenuButton);
+			bottomContainer.add(kittenMenuButton);
+			bottomContainer.add(fightMenuButton);
+			bottomContainer.add(tickMenuButton);
 			
 			this.add(BorderLayout.SOUTH, bottomContainer);
 			
@@ -117,14 +175,13 @@ public class Game extends Form {
 			jumpToDogMenuButton.getAllStyles().setBgColor(ColorUtil.BLUE);
 			jumpToDogMenuButton.getAllStyles().setFgColor(ColorUtil.WHITE);
 			
-			leftContainer.addComponent(expandMenuButton);
+			leftContainer.add(expandMenuButton);
 			leftContainer.add(upMenuButton);
 			leftContainer.add(leftMenuButton);
 			leftContainer.add(jumpToDogMenuButton);
 			
 			this.add(BorderLayout.WEST, leftContainer);
 			
-
 			Container rightContainer = new Container(new BoxLayout(BoxLayout.Y_AXIS));
 			rightContainer.getAllStyles().setPadding(Component.TOP, 50);
 			
@@ -164,20 +221,42 @@ public class Game extends Form {
 			scoopMenuButton.getAllStyles().setBgColor(ColorUtil.BLUE);
 			scoopMenuButton.getAllStyles().setFgColor(ColorUtil.WHITE);
 			
-			rightContainer.addComponent(contractMenuButton);
+			rightContainer.add(contractMenuButton);
 			rightContainer.add(downMenuButton);
 			rightContainer.add(rightMenuButton);
 			rightContainer.add(jumpToCatMenuButton);
 			rightContainer.add(scoopMenuButton);
 			this.add(BorderLayout.EAST, rightContainer);
 			
-
 			Container centerContainer = new Container(new BorderLayout());
 			centerContainer.getAllStyles().setBorder(Border.createLineBorder(2, ColorUtil.BLUE));
 			//centerContainer.addComponent(mapView);
 			this.add(BorderLayout.CENTER, centerContainer);
 			
+			gameWorld.addObserver(mapView);
+			gameWorld.addObserver(scoreView);
+			gameWorld.notifyObservers();
+			
+			CommandContract.setTarget(gameWorld);
+			CommandDown.setTarget(gameWorld);
+			CommandExpand.setTarget(gameWorld);
+			CommandFight.setTarget(gameWorld);
+			CommandJumpToCat.setTarget(gameWorld);
+			CommandJumpToDog.setTarget(gameWorld);
+			CommandKitten.setTarget(gameWorld);
+			CommandLeft.setTarget(gameWorld);
+			//CommandQuit.setTarget(gameWorld);
+			CommandRight.setTarget(gameWorld);
+			CommandScoop.setTarget(gameWorld);
+			CommandSound.setTarget(gameWorld);
+			CommandTick.setTarget(gameWorld);
+			CommandUp.setTarget(gameWorld);
+			
+			this.requestFocus();
 			this.show();
+		} catch (NullPointerException e1) {
+			
+		}
 	} // Game constructor
 
 

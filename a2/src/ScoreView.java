@@ -17,20 +17,25 @@ public class ScoreView extends Container implements IObserver {
 	
 	
 	public ScoreView() {
-		Container scoreContainer = new Container();
+		try {
+
 		totalScore = new Label();
-		scoreContainer.add(totalScore);
 		capturedDogs = new Label();
-		scoreContainer.add(capturedDogs);
 		capturedCats = new Label();
-		scoreContainer.add(capturedCats);
 		remainingDogs = new Label();
-		scoreContainer.add(remainingDogs);
 		remainingCats = new Label();
-		scoreContainer.add(remainingCats);
 		sound = new Label();
-		scoreContainer.add(sound);
 		
+		this.add(totalScore)
+			.add(capturedDogs)
+			.add(capturedCats)
+			.add(remainingDogs)
+			.add(remainingCats)
+			.add(sound);
+		
+		} catch (NullPointerException e1) {
+			
+		}
 		this.setVisible(true);
 	}
 

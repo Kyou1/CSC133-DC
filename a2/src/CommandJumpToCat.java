@@ -13,14 +13,16 @@ public class CommandJumpToCat extends Command {
 	}
 	
 	public static CommandJumpToCat getInstance() {
-		if(commandJumpCat == null)
+		if(commandJumpCat == null) {
 			commandJumpCat = new CommandJumpToCat();
+		}
 		return commandJumpCat;
 	}
 
 	public static void setTarget(GameWorld gameWorld) {
-		if( game == null )
+		if( game == null ) {
 			game = gameWorld;
+		}
 	}
 	
 	public void actionPerformed(ActionEvent e) {

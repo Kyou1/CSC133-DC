@@ -15,7 +15,7 @@ public class GameWorld implements IObservable {
 	private int dogQty, catQty;
 	private int totalScore = new Integer(0);
 	private int clockTick;
-	private int caughtCats, catsRemaining, caughtDogs, dogsRemaining;
+	private int caughtCats = new Integer(0), catsRemaining, caughtDogs = new Integer(0), dogsRemaining;
 
 	private Net net;
 	private Dog dog;
@@ -100,8 +100,8 @@ public class GameWorld implements IObservable {
 			if( currentObject instanceof Cat ) {
 				if(((Cat) currentObject).getLocationX() > netLeft
 						&& ((Cat) currentObject).getLocationX() < netRight
-						&& ((Cat) currentObject).getLocationX() > netBottom
-						&& ((Cat) currentObject).getLocationX() < netTop) {
+						&& ((Cat) currentObject).getLocationY() > netBottom
+						&& ((Cat) currentObject).getLocationY() < netTop) {
 					
 					System.out.println("Cat caught");
 					
@@ -114,8 +114,8 @@ public class GameWorld implements IObservable {
 			else if (currentObject instanceof Dog) {
 				if (((Dog) currentObject).getLocationX() > netLeft
 						&& ((Dog) currentObject).getLocationX() < netRight
-						&& ((Dog) currentObject).getLocationX() > netBottom
-						&& ((Dog) currentObject).getLocationX() < netTop) {
+						&& ((Dog) currentObject).getLocationY() > netBottom
+						&& ((Dog) currentObject).getLocationY() < netTop) {
 					
 					System.out.println("Dog caught");
 					
@@ -151,7 +151,7 @@ public class GameWorld implements IObservable {
 				}
 			}
 		}*/
-	}
+	} // end scoop function
 
 	public void moveRight() {
 		net.moveRight();
@@ -170,16 +170,25 @@ public class GameWorld implements IObservable {
 	}
 
 	public void JumpToDog() {
-		while(((IIterator) objects).hasNext()) {
-			if (((IIterator) objects).getNext() instanceof Dog) {
+		IIterator iterator = objects.getIterator();
+		Object currentObject;
+		
+		while(iterator.hasNext()) {
+			currentObject = iterator.getNext();
+			if (currentObject instanceof Dog) {
 				net.setLocation(dog.getLocationX(), dog.getLocationY());
 			}
 		}
 	}
 
 	public void JumpToCat() {
-		while(((IIterator) objects).hasNext()) {
-			if (((IIterator) objects).getNext() instanceof Cat) {
+		
+		IIterator iterator = objects.getIterator();
+		Object currentObject;
+		
+		while(iterator.hasNext()) {
+			currentObject = iterator.getNext();
+			if (currentObject instanceof Cat) {
 				net.setLocation(cat.getLocationX(), cat.getLocationY());
 			}
 		}
@@ -208,7 +217,7 @@ public class GameWorld implements IObservable {
 				listOfDogs.add(iterator.getIndex());
 			} // end if
 		} // end while
-		
+		notifyObservers();
 /*		int temp = rand.nextInt(gameObjectsList.size());
 		while (!(gameObjectsList.get(temp) instanceof Dog)) {
 			temp = rand.nextInt(gameObjectsList.size());
@@ -255,13 +264,13 @@ public class GameWorld implements IObservable {
 			}
 
 		}*/
-		int a = catNum - catQty;
-		int b = dogNum - dogQty;
+		catsRemaining = catNum - catQty;
+		dogsRemaining = dogNum - dogQty;
 		System.out.println("Current score: ");
 		System.out.println("Number of Cats: " + catQty);
 		System.out.println("Number of Dogs: " + dogQty);
-		System.out.println("Number of Dogs Captured: " + b);
-		System.out.println("Number of Cats Captured: " + a);
+		System.out.println("Number of Dogs Captured: " + dogsRemaining);
+		System.out.println("Number of Cats Captured: " + catsRemaining);
 	}
 
 	public void printMap() {
@@ -280,6 +289,17 @@ public class GameWorld implements IObservable {
 	}
 	
 	public int getTotalScore() {
+		
+		IIterator iterator = objects.getIterator();
+		Object currentObject;
+		
+		while(iterator.hasNext()) {
+			currentObject = iterator.getNext();
+			if (currentObject instanceof Dog) {
+				totalScore += 10;
+			}
+		}
+		totalScore -= (10*(int)getRemainingDogs());
 		return totalScore;
 	}
 	
@@ -292,10 +312,12 @@ public class GameWorld implements IObservable {
 	}
 	
 	public int getRemainingCats() {
+		catsRemaining = catQty;
 		return catsRemaining;
 	}
 	
 	public int getRemainingDogs() {
+		dogsRemaining = dogQty;
 		return dogsRemaining;
 	}
 

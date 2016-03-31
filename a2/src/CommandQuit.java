@@ -7,7 +7,7 @@ public class CommandQuit extends Command{
 	private static CommandQuit commandQuit;
 	
 	public CommandQuit() {
-		super("Quit");
+		super("Exit");
 		// TODO Auto-generated constructor stub
 	}
 
