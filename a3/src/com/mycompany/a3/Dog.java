@@ -11,6 +11,7 @@ public class Dog extends Animals implements IDrawable, ISelectable {
 	private boolean selected;
 	private Sounds sound;
 	private Sounds catCollision;
+	private int size, currentX, currentY, incX, incY;
 
 	public int getScratch() {
 		return scratch;
@@ -25,7 +26,6 @@ public class Dog extends Animals implements IDrawable, ISelectable {
 	}
 	
 	Dog() {
-		
 	}
 
 	@Override
@@ -40,12 +40,19 @@ public class Dog extends Animals implements IDrawable, ISelectable {
 	}
 
 	@Override
-	public void draw(Graphics g, Point size) {
-		
-		int halfSize = getSize()/2;
-		g.setColor(getColor());
-		g.fillArc((int)getLocationX() - halfSize, (int)getLocationY() - halfSize , getSize(), getSize(), 0, 360);
-		g.drawArc((int)getLocationX() - halfSize, (int)getLocationY() - halfSize, getSize(), getSize(), 0, 360);
+	public void draw(Graphics g, Point pCmpRelPrnt) {
+		size = getSize();
+		g.setColor(ColorUtil.GREEN);
+		g.fillArc(pCmpRelPrnt.getX()+currentX, pCmpRelPrnt.getY()+currentY, size, size, 0, 360);
+		g.drawArc(pCmpRelPrnt.getX()+currentX, pCmpRelPrnt.getY()+currentY, size, size, 0, 360);
+		move();
+	}
+	
+	public void move(Dimension dCmpSize) {
+		currentX += incX;
+		currentY += incY;
+		if ( (currentX+size >= dCmpSize.getWidth()) || (currentX < 0) ) incX = -incX ; 
+		if ( (currentY+size >= dCmpSize.getHeight()) || (currentY < 0) ) incY = -incY; 
 	}
 	
 	@Override
@@ -116,7 +123,7 @@ public class Dog extends Animals implements IDrawable, ISelectable {
 	@Override
 	public void draw(Graphics g) {
 		// TODO Auto-generated method stub
-		
+	
 	}
 
 }

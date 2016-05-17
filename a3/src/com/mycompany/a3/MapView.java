@@ -9,16 +9,16 @@ import com.codename1.ui.Container;
 public class MapView extends Container implements IObserver {
 	
 	private GameWorld gameworld;
-	private GameObjectCollection gameObjCollect;
+	private GameObjectCollection objects;
 	private Collection gameStart;
+	private Point pCmpRelPrnt;
 
 	public MapView() {
-
 	}
 	
 	public void update(IObservable o) {
 		gameworld = (GameWorld)o; 
-        gameObjCollect = gameworld.getGameObjectCollection(); 
+        objects = gameworld.getGameObjectCollection(); 
         gameStart = gameworld.getStart(); 
         repaint(); 
 	}
@@ -29,23 +29,23 @@ public class MapView extends Container implements IObserver {
          int x = getX(); 
          int y = getY();
 
-        IIterator iter = gameObjCollect.getIterator();
-         while (iter.hasNext()){ 
-             GameObject nxt = iter.getNext();
+        IIterator iterator = objects.getIterator();
+         while (iterator.hasNext()){ 
+             GameObject nxt = iterator.getNext();
+             Point pCmpRelPrnt = new Point(this.getX(),this.getY());
              if(nxt instanceof Cat){
                  Cat cat = (Cat)nxt;
-                 Point pCatCmpRelPrnt = new Point(this.getX(),this.getY());
-                 cat.draw(g, pCatCmpRelPrnt);
+                 cat.draw(g, pCmpRelPrnt);
+                 cat.move();
              } 
              if(nxt instanceof Dog){ 
                  Dog dog = (Dog)nxt;
-                 Point pDogCmpRelPrnt = new Point(this.getX(),this.getY());
-                 dog.draw(g, pDogCmpRelPrnt);
+                 dog.draw(g, pCmpRelPrnt);
+                 dog.move();
              } 
              if(nxt instanceof Net){ 
                  Net net = (Net)nxt;
-                 Point pNetCmpRelPrnt = new Point(this.getX(),this.getY());
-                 net.draw(g, pNetCmpRelPrnt);
+                 net.draw(g, pCmpRelPrnt);
              } 
  
 

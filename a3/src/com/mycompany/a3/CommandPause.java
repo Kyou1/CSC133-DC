@@ -23,9 +23,9 @@ public class CommandPause extends Command{
  
  
      //FOR ACCESSING GAMEWORLD FUNCTIONS 
-     public static void setTarget(Game g){ 
+     public static void setTarget(Game gameWorld){ 
          if(game == null) 
-             game = g; 
+             game = gameWorld; 
      } 
  
      //ACTUALLY PERFORM THE ACTION 

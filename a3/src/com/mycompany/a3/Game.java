@@ -138,7 +138,7 @@ public class Game extends Form implements ActionListener, Runnable {
 			bottomContainer.getAllStyles().setBorder(Border.createLineBorder(2, ColorUtil.GRAY));
 			bottomContainer.setLayout(new FlowLayout(Component.CENTER));
 			
-			Button kittenMenuButton = new Button("Kitten");
+/*			Button kittenMenuButton = new Button("Kitten");
 			Button fightMenuButton = new Button("Fight");
 			Button tickMenuButton = new Button("Tick");
 
@@ -165,7 +165,27 @@ public class Game extends Form implements ActionListener, Runnable {
 
 			bottomContainer.add(kittenMenuButton);
 			bottomContainer.add(fightMenuButton);
-			bottomContainer.add(tickMenuButton);
+			bottomContainer.add(tickMenuButton);*/
+			
+			Button healMenuButton = new Button("Heal");
+			Button pauseMenuButton = new Button("Pause");
+
+			healMenuButton.setCommand(CommandHeal.getInstance());
+			healMenuButton.keyPressed('h');
+			healMenuButton.getAllStyles().setPadding(20,20,20,20);
+			healMenuButton.getAllStyles().setBgTransparency(255);
+			healMenuButton.getAllStyles().setBgColor(ColorUtil.BLUE);
+			healMenuButton.getAllStyles().setFgColor(ColorUtil.WHITE);
+			
+			pauseMenuButton.setCommand(CommandPause.getInstance());
+			pauseMenuButton.keyPressed('p');
+			pauseMenuButton.getAllStyles().setPadding(20,20,20,20);
+			pauseMenuButton.getAllStyles().setBgTransparency(255);
+			pauseMenuButton.getAllStyles().setBgColor(ColorUtil.BLUE);
+			pauseMenuButton.getAllStyles().setFgColor(ColorUtil.WHITE);
+
+			bottomContainer.add(healMenuButton);
+			bottomContainer.add(pauseMenuButton);
 			
 			this.add(BorderLayout.SOUTH, bottomContainer);
 			
@@ -263,10 +283,11 @@ public class Game extends Form implements ActionListener, Runnable {
 			rightContainer.add(scoopMenuButton);
 			this.add(BorderLayout.EAST, rightContainer);
 			
-			Container centerContainer = new Container(new BorderLayout());
+			Container centerContainer = new Container();
+			centerContainer.setLayout(new BorderLayout());
 			centerContainer.getAllStyles().setBorder(Border.createLineBorder(2, ColorUtil.BLUE));
-			//centerContainer.addComponent(mapView);
 			this.add(BorderLayout.CENTER, centerContainer);
+			this.add(BorderLayout.CENTER, mapView);
 			
 			gameWorld.addObserver(mapView);
 			gameWorld.addObserver(scoreView);
@@ -280,15 +301,17 @@ public class Game extends Form implements ActionListener, Runnable {
 			CommandJumpToDog.setTarget(gameWorld);
 			CommandKitten.setTarget(gameWorld);
 			CommandLeft.setTarget(gameWorld);
-			//CommandQuit.setTarget(gameWorld);
+			//CommandQuit.setTarget(this);
 			CommandRight.setTarget(gameWorld);
 			CommandScoop.setTarget(gameWorld);
 			CommandSound.setTarget(gameWorld);
 			CommandTick.setTarget(gameWorld);
 			CommandUp.setTarget(gameWorld);
+			CommandHeal.setTarget(gameWorld);
+			CommandPause.setTarget(this);
 			
 			timer = new UITimer(this);
-			timer.schedule(1000, false, this);
+			timer.schedule(30, false, this);
 			
 			this.requestFocus();
 			this.show();
@@ -313,7 +336,7 @@ public class Game extends Form implements ActionListener, Runnable {
  		//gw.stopBackGroundClip(); 
  
  
- 		healCommand.setEnabled(false); 
+ 		healCommand.setEnabled(true); 
  
   		contractCommand.setEnabled(false); 
  		downCommand.setEnabled(false); 

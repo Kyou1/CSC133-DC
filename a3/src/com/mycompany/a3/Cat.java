@@ -2,6 +2,7 @@ package com.mycompany.a3;
 
 import java.util.Random;
 
+import com.codename1.charts.util.ColorUtil;
 import com.codename1.ui.Display;
 import com.codename1.ui.Graphics;
 import com.codename1.ui.geom.Dimension;
@@ -15,9 +16,10 @@ public class Cat extends Animals implements IDrawable, ICollider {
 	private boolean collision;
 	private Sounds collisionSound;
 	private Random rand = new Random();
-	
+	private int size, currentX = 0, currentY = 0, incX, incY;
 	
 	Cat() {
+
 	}
 	
 	public static void setTarget(GameWorld gw) {
@@ -32,20 +34,30 @@ public class Cat extends Animals implements IDrawable, ICollider {
 	}
 	
 	@Override
-	public void draw(Graphics g, Point p) {
+	public void draw(Graphics g, Point pCmpRelPrnt) {
+		currentX = (int) getLocationX();
+		currentY = (int) getLocationY();
+		incX = getSpeed();
+		incY = getSpeed();
 		
-		g.setColor(getColor());
+		g.setColor(ColorUtil.BLUE);
 		
-		Point top      = new Point((int)getLocationX(), (int)getLocationY() + (getSize()/2)); 
-	    Point bottomLeft  = new Point((int)getLocationX() - (getSize()/2), (int)getLocationY() - (getSize()/2)); 
-	    Point bottomRight = new Point((int)getLocationX() + (getSize()/2), (int)getLocationY() - (getSize()/2)); 
+		Point top      = new Point(pCmpRelPrnt.getX()+currentX, pCmpRelPrnt.getY()+currentY + (getSize()/2)); 
+	    Point bottomLeft  = new Point(pCmpRelPrnt.getX()+currentX - (getSize()/2), pCmpRelPrnt.getY()+currentY  - (getSize()/2)); 
+	    Point bottomRight = new Point(pCmpRelPrnt.getX()+currentX + (getSize()/2), pCmpRelPrnt.getY()+currentY  - (getSize()/2)); 
 	     
 	      
 	    int [] xPts = new int [] {top.getX(), bottomLeft.getX(), bottomRight.getX()} ; 
 	    int [] yPts = new int [] {top.getY(), bottomLeft.getY(), bottomRight.getY()} ; 
 	    
 	    g.fillPolygon(xPts, yPts, 3); 
-	    
+	}
+	
+	public void move(Dimension dCmpSize) {
+		currentX += incX;
+		currentY += incY;
+		if ( (currentX+size >= dCmpSize.getWidth()) || (currentX < 0) ) incX = -incX ; 
+		if ( (currentY+size >= dCmpSize.getHeight()) || (currentY < 0) ) incY = -incY; 
 	}
 	
 	@Override

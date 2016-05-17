@@ -1,5 +1,6 @@
 package com.mycompany.a3;
 
+import com.codename1.charts.util.ColorUtil;
 import com.codename1.ui.Graphics;
 import com.codename1.ui.geom.Dimension;
 import com.codename1.ui.geom.Dimension2D;
@@ -47,13 +48,11 @@ public class Net extends Catcher implements IDrawable, ICollider {
 		
 	}
 
-    public void draw(Graphics g, Point size) { 
+    public void draw(Graphics g, Point pCmpRelPrnt) { 
          int halfSize = getSize()/2; 
- 
- 
-         g.setColor(getColor()); 
-         g.drawRect((int)getLocationX()-halfSize,(int)getLocationY()-halfSize,getSize(),getSize()); 
-         g.drawRect((int)getLocationX(),(int)getLocationY(),5,5); 
+         g.setColor(ColorUtil.YELLOW); 
+         g.drawRect(pCmpRelPrnt.getX()-halfSize,pCmpRelPrnt.getY()-halfSize,getSize(),getSize()); 
+         g.drawRect(pCmpRelPrnt.getX()-halfSize,pCmpRelPrnt.getY()-halfSize,5,5); 
      }
 
 
